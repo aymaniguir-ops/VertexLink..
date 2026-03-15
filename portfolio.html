@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Vertex Link — Nos projets. Architectures de performance livrées.">
+<title>Projets — Vertex Link</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+<style>
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);margin-top:3rem;}
+.project-card{background:#050505;padding:3rem 2.5rem;position:relative;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease),background .2s;cursor:pointer;}
+.project-card.on{opacity:1;transform:none;}
+.project-card:nth-child(2).on{transition-delay:.1s;}
+.project-card:nth-child(3).on{transition-delay:.15s;}
+.project-card:nth-child(4).on{transition-delay:.2s;}
+.project-card:hover{background:#0d0d0d;}
+.project-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#FF5F00;transition:width .4s var(--ease);}
+.project-card:hover::after{width:100%;}
+.project-num{font-family:var(--f-m);font-size:.6rem;letter-spacing:.12em;color:rgba(255,95,0,.5);margin-bottom:1.5rem;}
+.project-title{font-family:var(--f-d);font-weight:800;font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:-.04em;color:#fff;margin-bottom:.75rem;}
+.project-desc{font-family:var(--f-m);font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.8;margin-bottom:1.5rem;max-width:42ch;}
+.project-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+.project-tag{font-family:var(--f-m);font-size:.58rem;letter-spacing:.07em;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.3);padding:.22rem .65rem;border-radius:100px;}
+.project-link{font-family:var(--f-m);font-size:.72rem;letter-spacing:.06em;color:#FF5F00;display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s;}
+.project-card:hover .project-link{gap:.7rem;}
+.project-card--featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.project-card--featured .project-title{font-size:clamp(2rem,4vw,3rem);}
+.project-visual{background:#111;border-radius:12px;height:220px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.project-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,rgba(255,95,0,.08),transparent 65%);}
+.project-visual-icon{font-size:3rem;opacity:.3;}
+.empty-state{grid-column:1/-1;padding:5rem 2.5rem;text-align:center;}
+.empty-state p{font-family:var(--f-m);font-size:.82rem;color:rgba(255,255,255,.3);line-height:1.8;}
+.coming-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,95,0,.1);border:1px solid rgba(255,95,0,.2);border-radius:100px;padding:.3rem .9rem;margin-bottom:1.5rem;font-family:var(--f-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,95,0,.7);}
+.cta-band{background:#FF5F00;border-radius:16px;padding:clamp(3rem,5vw,5rem);display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-top:4rem;opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.cta-band.on{opacity:1;transform:none;}
+.cta-band__h{font-family:var(--f-d);font-weight:800;font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.045em;line-height:1;color:#fff;}
+.cta-band__h em{font-style:italic;font-weight:400;opacity:.8;}
+.cta-band__btns{display:flex;gap:.75rem;flex-shrink:0;}
+.btn--white{background:#050505;color:#fff;border:1px solid #050505;padding:.8rem 1.7rem;border-radius:6px;font-family:var(--f-m);font-size:.76rem;letter-spacing:.06em;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s;}
+.btn--white:hover{background:#111;}
+.btn--wt{background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.35);padding:.8rem 1.7rem;border-radius:6px;font-family:var(--f-m);font-size:.76rem;letter-spacing:.06em;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .2s,border-color .2s;}
+.btn--wt:hover{color:#fff;border-color:#fff;}
+@media(max-width:900px){.projects-grid{grid-template-columns:1fr;}.project-card--featured{grid-template-columns:1fr;}.cta-band{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<div id="vl-cursor"></div><div id="vl-ring"></div><div id="vl-prog"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="home.html" class="nav__logo"><img src="logo.png" alt="VL" style="width:40px;height:40px;border-radius:10px;object-fit:cover;"><span class="nav__logo-txt">Vertex Link</span></a>
+    <nav class="nav__links">
+      <a href="home.html" class="nav__link">Accueil</a>
+      <a href="services.html" class="nav__link">Services</a>
+      <a href="portfolio.html" class="nav__link active">Projets</a>
+      <a href="a-propos.html" class="nav__link">À propos</a>
+      <a href="contact.html" class="nav__link">Contact</a>
+    </nav>
+    <a href="contact.html" class="nav__cta">Démarrer un projet</a>
+    <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="home.html">Accueil</a><a href="services.html">Services</a><a href="portfolio.html">Projets</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="m-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero__inner">
+    <span class="page-hero__num">02 — Projets</span>
+    <h1 class="page-hero__h1">
+      <span class="split-wrap"><span class="split-line">Nos</span></span>
+      <span class="split-wrap"><span class="split-line"><em>déploiements.</em></span></span>
+    </h1>
+    <p class="page-hero__p">Chaque architecture est unique. Chaque système est pensé pour convertir. Voici ce que nous avons construit.</p>
+  </div>
+</div>
+
+<main>
+<section class="section">
+  <div class="section__inner">
+    <p class="eyebrow">Réalisations</p>
+    <h2 class="h2">Architectures<br><em>livrées.</em></h2>
+    <div class="projects-grid">
+      <div class="project-card project-card--featured">
+        <div>
+          <div class="project-num">01 — Génèse</div>
+          <div class="project-title">SocialForma</div>
+          <div class="project-desc">Architecture de performance pour un expert en conformité et stratégie sociale. Interface stratégique multi-pages, conversion optimisée.</div>
+          <div class="project-tags"><span class="project-tag">Architecture multipage</span><span class="project-tag">SEO technique</span><span class="project-tag">Lighthouse 97+</span></div>
+          <span class="project-link">Voir le projet →</span>
+        </div>
+        <div class="project-visual"><span class="project-visual-icon">⚡</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-num">02 — En cours</div>
+        <div class="project-title">Viraly.ia</div>
+        <div class="project-desc">Landing page SaaS haute performance. Système de conversion pour une plateforme d'automatisation de contenu.</div>
+        <div class="project-tags"><span class="project-tag">Landing page</span><span class="project-tag">SaaS</span><span class="project-tag">Conversion</span></div>
+        <span class="project-link">Bientôt →</span>
+      </div>
+      <div class="project-card">
+        <div class="project-num">03 — À venir</div>
+        <div class="project-title">Votre projet</div>
+        <div class="project-desc">La prochaine architecture déployée sera peut-être la vôtre. 2 mandats disponibles ce mois-ci.</div>
+        <div class="project-tags"><span class="project-tag">Disponible</span><span class="project-tag">7 jours</span></div>
+        <a href="contact.html" class="project-link">Démarrer maintenant →</a>
+      </div>
+    </div>
+
+    <div class="cta-band" data-r>
+      <h2 class="cta-band__h">Prêt à rejoindre<br><em>nos références ?</em></h2>
+      <div class="cta-band__btns">
+        <a href="contact.html" class="btn btn--white">Activer mon architecture →</a>
+        <a href="services.html" class="btn btn--wt">Voir les offres</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div><div class="footer__logo"><img src="logo.png" alt="VL" style="width:26px;height:26px;border-radius:7px;">Vertex Link</div><p class="footer__desc">Architecture de performance — systèmes de déploiement éclair sur mesure.</p></div>
+      <div class="footer__col"><h3 class="footer__col-title">Navigation</h3><ul><li><a href="home.html">Accueil</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Projets</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Offres</h3><ul><li><a href="services.html">Genèse — 750€</a></li><li><a href="services.html">Ascension — 950€</a></li><li><a href="services.html">Renaissance — 600€</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Contact</h3><ul><li><a href="mailto:vertexlink33@gmail.com">vertexlink33@gmail.com</a></li><li><a href="https://instagram.com/vertexlink_" target="_blank">@vertexlink_</a></li></ul></div>
+    </div>
+    <div class="footer__bottom"><p class="footer__copy">© 2025 Vertex Link — Tous droits réservés</p><div class="footer__social"><a href="mailto:vertexlink33@gmail.com">Email</a><a href="https://instagram.com/vertexlink_" target="_blank">Instagram</a></div></div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/33781971786" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.67 4.61 1.832 6.5L4 29l7.723-1.813A12.94 12.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3z" fill="#fff" fill-opacity=".25"/><path d="M21.5 18.5c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.47 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg>
+</a>
+
+<script>
+(function(){
+const cur=document.getElementById('vl-cursor'),ring=document.getElementById('vl-ring'),prog=document.getElementById('vl-prog');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('h');ring.classList.add('h');});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');ring.classList.remove('h');});});
+window.addEventListener('scroll',()=>{const p=window.scrollY/(document.body.scrollHeight-innerHeight)*100;prog.style.width=p+'%';},{passive:true});
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>{navEl.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+const burger=document.getElementById('burger'),mNav=document.getElementById('mobileNav');
+if(burger)burger.addEventListener('click',()=>{mNav.classList.toggle('open');burger.classList.toggle('open');});
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.eyebrow,.h2,.project-card,.cta-band,.page-hero__num,.page-hero__p,[data-r]').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.split-line').forEach(el=>el.classList.add('on')),100);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Vertex Link — Démarrez votre architecture de performance. Réponse sous 24h.">
+<title>Contact — Vertex Link</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+<style>
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:3rem;}
+.contact-form{display:flex;flex-direction:column;gap:1.25rem;}
+.form-group{display:flex;flex-direction:column;gap:.5rem;}
+.form-label{font-family:var(--f-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.form-input,.form-textarea{background:#0d0d0d;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.9rem 1.1rem;font-family:var(--f-m);font-size:.8rem;color:#fff;transition:border-color .2s,box-shadow .2s;outline:none;width:100%;}
+.form-input:focus,.form-textarea:focus{border-color:#FF5F00;box-shadow:0 0 0 3px rgba(255,95,0,.1);}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.2);}
+.form-textarea{resize:vertical;min-height:140px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-submit{background:#FF5F00;color:#fff;border:1px solid #FF5F00;padding:.9rem 2rem;border-radius:8px;font-family:var(--f-m);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:box-shadow .2s,transform .2s;box-shadow:0 0 28px rgba(255,95,0,.2);}
+.form-submit:hover{box-shadow:0 0 48px rgba(255,95,0,.45);transform:translateY(-2px);}
+.contact-info{display:flex;flex-direction:column;gap:2.5rem;}
+.info-block{border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:2rem;}
+.info-block:last-child{border-bottom:none;}
+.info-label{font-family:var(--f-m);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#FF5F00;margin-bottom:.75rem;}
+.info-value{font-family:var(--f-d);font-weight:700;font-size:1.1rem;color:#fff;}
+.info-sub{font-family:var(--f-m);font-size:.74rem;color:rgba(255,255,255,.35);margin-top:.3rem;line-height:1.7;}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:3rem;}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.07);}
+.faq-q{font-family:var(--f-d);font-weight:700;font-size:.9rem;color:#fff;padding:1.25rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.faq-q::after{content:'+';color:#FF5F00;font-size:1.2rem;font-weight:300;transition:transform .3s;}
+.faq-item.open .faq-q::after{transform:rotate(45deg);}
+.faq-a{font-family:var(--f-m);font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.85;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),padding .3s;}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:1.25rem;}
+.avail-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,95,0,.1);border:1px solid rgba(255,95,0,.25);border-radius:100px;padding:.4rem 1rem;margin-top:.75rem;}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:#FF5F00;box-shadow:0 0 8px rgba(255,95,0,.8);animation:blink 2.5s ease-in-out infinite;}
+.avail-txt{font-family:var(--f-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="vl-cursor"></div><div id="vl-ring"></div><div id="vl-prog"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="home.html" class="nav__logo"><img src="logo.png" alt="VL" style="width:40px;height:40px;border-radius:10px;object-fit:cover;"><span class="nav__logo-txt">Vertex Link</span></a>
+    <nav class="nav__links">
+      <a href="home.html" class="nav__link">Accueil</a>
+      <a href="services.html" class="nav__link">Services</a>
+      <a href="portfolio.html" class="nav__link">Projets</a>
+      <a href="a-propos.html" class="nav__link">À propos</a>
+      <a href="contact.html" class="nav__link active">Contact</a>
+    </nav>
+    <a href="contact.html" class="nav__cta">Démarrer un projet</a>
+    <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="home.html">Accueil</a><a href="services.html">Services</a><a href="portfolio.html">Projets</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="m-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero__inner">
+    <span class="page-hero__num">04 — Contact</span>
+    <h1 class="page-hero__h1">
+      <span class="split-wrap"><span class="split-line">Activons votre</span></span>
+      <span class="split-wrap"><span class="split-line"><em>architecture.</em></span></span>
+    </h1>
+    <p class="page-hero__p">Réponse sous 24h. Devis gratuit. Zéro engagement. Votre projet mérite une vraie conversation.</p>
+  </div>
+</div>
+
+<main>
+<section class="section">
+  <div class="section__inner">
+    <div class="contact-grid">
+      <div>
+        <p class="eyebrow">Votre projet</p>
+        <h2 class="h2">Parlez-nous de<br><em>votre vision.</em></h2>
+        <form class="contact-form" action="https://formspree.io/f/vertexlink33@gmail.com" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="name">Nom complet</label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Jean Dupont" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="jean@entreprise.fr" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="offre">Architecture souhaitée</label>
+            <select class="form-input" id="offre" name="offre">
+              <option value="">— Choisir une architecture —</option>
+              <option value="genese">Genèse — 750€</option>
+              <option value="ascension">Ascension — 950€</option>
+              <option value="renaissance">Renaissance — 600€</option>
+              <option value="autre">Autre / Je ne sais pas encore</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Décrivez votre projet</label>
+            <textarea class="form-textarea" id="message" name="message" placeholder="Votre activité, vos objectifs, votre cible..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Envoyer ma demande →</button>
+        </form>
+      </div>
+      <div class="contact-info" data-r>
+        <div class="info-block">
+          <div class="info-label">Disponibilité</div>
+          <div class="info-value">2 mandats disponibles</div>
+          <div class="avail-badge"><span class="avail-dot"></span><span class="avail-txt">Disponible maintenant</span></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Délai de réponse</div>
+          <div class="info-value">Sous 24h</div>
+          <div class="info-sub">Nous répondons à chaque demande sérieuse avec une analyse personnalisée de votre projet.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contact direct</div>
+          <div class="info-value"><a href="mailto:vertexlink33@gmail.com" style="color:#FF5F00;">vertexlink33@gmail.com</a></div>
+          <div class="info-sub">Pour les projets urgents ou les questions rapides.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Déploiement garanti</div>
+          <div class="info-value">7 jours</div>
+          <div class="info-sub">De la signature du brief à la mise en ligne. Garanti contractuellement.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="section__inner">
+    <p class="eyebrow">Questions fréquentes</p>
+    <h2 class="h2">Tout ce que vous<br><em>voulez savoir.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Combien de temps pour déployer mon architecture ?</div><div class="faq-a">7 jours pour une architecture 1–2 pages. Le délai commence après validation du brief. Nous vous tenons informé à chaque étape.</div></div>
+      <div class="faq-item"><div class="faq-q">Le paiement en 2× est-il disponible ?</div><div class="faq-a">Oui, sur toutes nos architectures. 50% à la commande, 50% à la livraison. Aucuns frais supplémentaires.</div></div>
+      <div class="faq-item"><div class="faq-q">L'hébergement est-il vraiment inclus ?</div><div class="faq-a">Oui, sans exception. DNS, SSL, mise en ligne — tout est inclus dans chaque architecture. Votre système est opérationnel dès la livraison.</div></div>
+      <div class="faq-item"><div class="faq-q">Puis-je modifier l'architecture après livraison ?</div><div class="faq-a">Oui. Une période de support est incluse dans chaque offre pour les ajustements post-livraison. Pour des évolutions majeures, nous établissons un nouveau devis.</div></div>
+      <div class="faq-item"><div class="faq-q">Quelle est la différence entre Genèse et Ascension ?</div><div class="faq-a">Genèse est une architecture 1–2 pages idéale pour les fondateurs et freelances. Ascension est un écosystème multipage complet pour les entreprises qui veulent dominer leur marché.</div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div><div class="footer__logo"><img src="logo.png" alt="VL" style="width:26px;height:26px;border-radius:7px;">Vertex Link</div><p class="footer__desc">Architecture de performance — systèmes de déploiement éclair sur mesure.</p></div>
+      <div class="footer__col"><h3 class="footer__col-title">Navigation</h3><ul><li><a href="home.html">Accueil</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Projets</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Offres</h3><ul><li><a href="services.html">Genèse — 750€</a></li><li><a href="services.html">Ascension — 950€</a></li><li><a href="services.html">Renaissance — 600€</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Contact</h3><ul><li><a href="mailto:vertexlink33@gmail.com">vertexlink33@gmail.com</a></li><li><a href="https://instagram.com/vertexlink_" target="_blank">@vertexlink_</a></li></ul></div>
+    </div>
+    <div class="footer__bottom"><p class="footer__copy">© 2025 Vertex Link — Tous droits réservés</p><div class="footer__social"><a href="mailto:vertexlink33@gmail.com">Email</a><a href="https://instagram.com/vertexlink_" target="_blank">Instagram</a></div></div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/33781971786" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.67 4.61 1.832 6.5L4 29l7.723-1.813A12.94 12.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3z" fill="#fff" fill-opacity=".25"/><path d="M21.5 18.5c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.47 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg>
+</a>
+
+<script>
+(function(){
+const cur=document.getElementById('vl-cursor'),ring=document.getElementById('vl-ring'),prog=document.getElementById('vl-prog');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('h');ring.classList.add('h');});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');ring.classList.remove('h');});});
+window.addEventListener('scroll',()=>{const p=window.scrollY/(document.body.scrollHeight-innerHeight)*100;prog.style.width=p+'%';},{passive:true});
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>{navEl.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+const burger=document.getElementById('burger'),mNav=document.getElementById('mobileNav');
+if(burger)burger.addEventListener('click',()=>{mNav.classList.toggle('open');burger.classList.toggle('open');});
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.eyebrow,.h2,[data-r],.page-hero__num,.page-hero__p').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.split-line').forEach(el=>el.classList.add('on')),100);
+document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const item=q.parentElement;item.classList.toggle('open');});});
+})();
+</script>
+</body>
+</html>

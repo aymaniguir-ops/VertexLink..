@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Vertex Link — Architecture de performance, notre philosophie et notre stack.">
+<title>À propos — Vertex Link</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+<style>
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.06);margin-top:3rem;}
+.value-item{background:#050505;padding:2.5rem 2rem;opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease),background .2s;}
+.value-item.on{opacity:1;transform:none;}
+.value-item:hover{background:#0d0d0d;}
+.value-num{font-family:var(--f-m);font-size:.58rem;letter-spacing:.12em;color:rgba(255,95,0,.45);margin-bottom:1rem;}
+.value-title{font-family:var(--f-d);font-weight:800;font-size:1.1rem;letter-spacing:-.03em;color:#fff;margin-bottom:.6rem;}
+.value-desc{font-family:var(--f-m);font-size:.74rem;color:rgba(255,255,255,.35);line-height:1.85;}
+
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);margin-top:3rem;}
+.stack-item{background:#050505;padding:2rem 1.5rem;text-align:center;opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),background .2s;}
+.stack-item.on{opacity:1;transform:none;}
+.stack-item:hover{background:#0d0d0d;}
+.stack-icon{width:48px;height:48px;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;}
+.stack-icon img,.stack-icon svg{width:100%;height:100%;}
+.stack-name{font-family:var(--f-d);font-weight:700;font-size:.88rem;color:#fff;margin-bottom:.2rem;}
+.stack-role{font-family:var(--f-m);font-size:.62rem;color:rgba(255,255,255,.32);letter-spacing:.05em;}
+
+.tl-wrap{margin-top:3.5rem;display:flex;flex-direction:column;}
+.tl-item{display:grid;grid-template-columns:120px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transform:translateX(-16px);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+.tl-item.on{opacity:1;transform:none;}
+.tl-year{font-family:var(--f-m);font-size:.7rem;letter-spacing:.08em;color:#FF5F00;padding-top:.15rem;}
+.tl-title{font-family:var(--f-d);font-weight:700;font-size:.92rem;color:#fff;margin-bottom:.3rem;}
+.tl-desc{font-family:var(--f-m);font-size:.74rem;color:rgba(255,255,255,.35);line-height:1.75;}
+
+.manifesto{background:#0a0a0a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:3rem;margin-top:3rem;opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.manifesto.on{opacity:1;transform:none;}
+.manifesto-text{font-family:var(--f-d);font-weight:700;font-size:clamp(1.2rem,2.5vw,1.8rem);letter-spacing:-.03em;line-height:1.35;color:#fff;}
+.manifesto-text em{color:#FF5F00;font-style:italic;font-weight:400;}
+
+.cta-band{background:#FF5F00;border-radius:16px;padding:clamp(3rem,5vw,5rem);display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-top:4rem;opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.cta-band.on{opacity:1;transform:none;}
+.cta-band__h{font-family:var(--f-d);font-weight:800;font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.045em;line-height:1;color:#fff;}
+.cta-band__h em{font-style:italic;font-weight:400;opacity:.8;}
+.cta-band__btns{display:flex;gap:.75rem;flex-shrink:0;}
+.btn--white{background:#050505;color:#fff;border:1px solid #050505;padding:.8rem 1.7rem;border-radius:6px;font-family:var(--f-m);font-size:.76rem;letter-spacing:.06em;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s;}
+.btn--white:hover{background:#111;}
+.btn--wt{background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.35);padding:.8rem 1.7rem;border-radius:6px;font-family:var(--f-m);font-size:.76rem;letter-spacing:.06em;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .2s,border-color .2s;}
+.btn--wt:hover{color:#fff;border-color:#fff;}
+
+@media(max-width:900px){.values-grid{grid-template-columns:1fr;}.stack-grid{grid-template-columns:repeat(2,1fr);}.tl-item{grid-template-columns:80px 1fr;gap:1rem;}.cta-band{flex-direction:column;text-align:center;}}
+@media(max-width:480px){.stack-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div id="vl-cursor"></div><div id="vl-ring"></div><div id="vl-prog"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="home.html" class="nav__logo"><img src="logo.png" alt="VL" style="width:40px;height:40px;border-radius:10px;object-fit:cover;"><span class="nav__logo-txt">Vertex Link</span></a>
+    <nav class="nav__links">
+      <a href="home.html" class="nav__link">Accueil</a>
+      <a href="services.html" class="nav__link">Services</a>
+      <a href="portfolio.html" class="nav__link">Projets</a>
+      <a href="a-propos.html" class="nav__link active">À propos</a>
+      <a href="contact.html" class="nav__link">Contact</a>
+    </nav>
+    <a href="contact.html" class="nav__cta">Démarrer un projet</a>
+    <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="home.html">Accueil</a><a href="services.html">Services</a><a href="portfolio.html">Projets</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="m-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero__inner">
+    <span class="page-hero__num">03 — À propos</span>
+    <h1 class="page-hero__h1">
+      <span class="split-wrap"><span class="split-line">On crée,</span></span>
+      <span class="split-wrap"><span class="split-line"><em>sur mesure.</em></span></span>
+    </h1>
+    <p class="page-hero__p">Vertex Link, c'est une approche radicale : chaque architecture est unique, construite à la main, pensée pour convertir. Pas de raccourcis.</p>
+  </div>
+</div>
+
+<main>
+
+<section class="section">
+  <div class="section__inner">
+    <p class="eyebrow">Notre philosophie</p>
+    <h2 class="h2">Ce qui nous<br><em>guide.</em></h2>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-num">01</div><div class="value-title">Performance absolue</div><p class="value-desc">Lighthouse 97+ n'est pas un objectif, c'est le point de départ. Chaque milliseconde compte pour la conversion.</p></div>
+      <div class="value-item"><div class="value-num">02</div><div class="value-title">Exclusivité totale</div><p class="value-desc">Zéro template, zéro builder. Chaque interface est architecturée depuis zéro pour votre image et vos objectifs.</p></div>
+      <div class="value-item"><div class="value-num">03</div><div class="value-title">Livraison sans excuses</div><p class="value-desc">7 jours, contractuellement. Pas d'estimation vague. Nous tenons nos engagements, point.</p></div>
+      <div class="value-item"><div class="value-num">04</div><div class="value-title">ROI comme boussole</div><p class="value-desc">Un site qui ne convertit pas n'a aucune valeur. Chaque décision de design est orientée par un seul critère : votre retour sur investissement.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="section__inner">
+    <p class="eyebrow">Notre stack</p>
+    <h2 class="h2">Les outils de<br><em>notre architecture.</em></h2>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="10" height="10" rx="5" fill="#F24E1E"/><rect x="4" y="18" width="10" height="10" rx="5" fill="#0ACF83"/><rect x="18" y="4" width="10" height="10" rx="5" fill="#FF7262"/><circle cx="23" cy="23" r="5" fill="#1ABCFE"/></svg></div>
+        <div class="stack-name">Figma</div><div class="stack-role">Maquettes</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><polygon points="16,2 30,8 30,24 16,30 2,24 2,8" fill="#E34F26"/><path d="M9 10l1.5 14L16 26l5.5-2 1.5-14z" fill="#fff" opacity=".9"/></svg></div>
+        <div class="stack-name">HTML5</div><div class="stack-role">Structure</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><polygon points="16,2 30,8 30,24 16,30 2,24 2,8" fill="#1572B6"/><path d="M9 10l1.5 14L16 26l5.5-2 1.5-14z" fill="#fff" opacity=".9"/></svg></div>
+        <div class="stack-name">CSS3</div><div class="stack-role">Style & animations</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="2" fill="#F7DF1E"/><path d="M9 25.5l2.3-1.4c.4.8.8 1.4 1.7 1.4.9 0 1.4-.3 1.4-1.7V15h2.8v8.8c0 2.8-1.6 4-4 4-2.2 0-3.4-1.1-4.2-2.3z" fill="#323330"/><path d="M19 25.2l2.3-1.4c.6 1 1.3 1.7 2.7 1.7 1.1 0 1.8-.6 1.8-1.3 0-.9-.7-1.2-1.9-1.7l-.7-.3c-1.9-.8-3.1-1.8-3.1-3.9 0-1.9 1.5-3.4 3.8-3.4 1.6 0 2.8.6 3.6 2l-2.2 1.4c-.4-.8-1-1.1-1.6-1.1-.7 0-1.2.4-1.2 1.1 0 .7.5 1 1.6 1.5l.7.3c2.2 1 3.4 1.9 3.4 4.1 0 2.3-1.8 3.6-4.2 3.6-2.4 0-3.9-1.2-4.7-2.6z" fill="#323330"/></svg></div>
+        <div class="stack-name">JavaScript</div><div class="stack-role">Interactions</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2C8.27 2 2 8.27 2 16c0 6.19 4.01 11.43 9.57 13.29.7.13.96-.3.96-.67v-2.34c-3.9.85-4.72-1.88-4.72-1.88-.64-1.62-1.56-2.05-1.56-2.05-1.27-.87.1-.85.1-.85 1.41.1 2.15 1.44 2.15 1.44 1.25 2.14 3.28 1.52 4.08 1.16.13-.9.49-1.52.89-1.87-3.11-.35-6.38-1.56-6.38-6.93 0-1.53.55-2.78 1.44-3.76-.14-.35-.62-1.78.14-3.71 0 0 1.17-.37 3.85 1.43A13.4 13.4 0 0116 9.3c1.19.01 2.39.16 3.51.47 2.67-1.8 3.84-1.43 3.84-1.43.76 1.93.28 3.36.14 3.71.9.98 1.44 2.23 1.44 3.76 0 5.38-3.28 6.57-6.4 6.92.5.43.95 1.29.95 2.6v3.85c0 .37.25.81.96.67C25.99 27.43 30 22.19 30 16 30 8.27 23.73 2 16 2z" fill="#fff" opacity=".8"/></svg></div>
+        <div class="stack-name">GitHub</div><div class="stack-role">Versioning</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4L28 26H4L16 4Z" fill="#fff" opacity=".85"/></svg></div>
+        <div class="stack-name">Vercel</div><div class="stack-role">Déploiement</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" fill="#F44B21" opacity=".2"/><circle cx="16" cy="16" r="13" stroke="#F44B21" stroke-width="2" fill="none"/><path d="M16 8v8l5 3" stroke="#F44B21" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="stack-name">Lighthouse</div><div class="stack-role">Audit performance</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#4285F4" opacity=".8"/><circle cx="16" cy="16" r="6" fill="#fff"/></svg></div>
+        <div class="stack-name">SEO</div><div class="stack-role">Référencement</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon"><svg viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="18" rx="3" fill="#EC4A2D" opacity=".9"/><path d="M4 12h24" stroke="#fff" stroke-width="1.5" opacity=".3"/><path d="M10 18l6 4 6-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="stack-name">Formspree</div><div class="stack-role">Formulaires</div>
+      </div>
+    </div>
+
+    <div class="manifesto">
+      <div class="manifesto-text">
+        Nous ne livrons pas des maquettes jolies.<br>
+        Nous déployons des <em>systèmes qui travaillent</em><br>
+        pour vous, 24h/24, 7j/7 — sans pause.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+    <p class="eyebrow">Notre histoire</p>
+    <h2 class="h2">Depuis le<br><em>début.</em></h2>
+    <div class="tl-wrap">
+      <div class="tl-item"><div class="tl-year">2023</div><div><div class="tl-title">Les premiers projets</div><p class="tl-desc">Premiers systèmes construits — Dino Odyssey, Cyber Guard. L'apprentissage du code sur mesure commence.</p></div></div>
+      <div class="tl-item"><div class="tl-year">2024</div><div><div class="tl-title">Viraly.ia & SocialForma</div><p class="tl-desc">Premiers déploiements clients. Architecture SaaS et corporate. La méthode Figma → Performance se consolide.</p></div></div>
+      <div class="tl-item"><div class="tl-year">2025</div><div><div class="tl-title">Vertex Link — Architecture de Performance</div><p class="tl-desc">Lancement de l'agence. Positionnement premium, méthode éprouvée, système de déploiement éclair en 7 jours.</p></div></div>
+    </div>
+
+    <div class="cta-band" data-r>
+      <h2 class="cta-band__h">On travaille<br><em>ensemble ?</em></h2>
+      <div class="cta-band__btns">
+        <a href="contact.html" class="btn btn--white">Activer mon architecture →</a>
+        <a href="services.html" class="btn btn--wt">Voir les offres</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div><div class="footer__logo"><img src="logo.png" alt="VL" style="width:26px;height:26px;border-radius:7px;">Vertex Link</div><p class="footer__desc">Architecture de performance — systèmes de déploiement éclair sur mesure.</p></div>
+      <div class="footer__col"><h3 class="footer__col-title">Navigation</h3><ul><li><a href="home.html">Accueil</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Projets</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Offres</h3><ul><li><a href="services.html">Genèse — 750€</a></li><li><a href="services.html">Ascension — 950€</a></li><li><a href="services.html">Renaissance — 600€</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Contact</h3><ul><li><a href="mailto:vertexlink33@gmail.com">vertexlink33@gmail.com</a></li><li><a href="https://instagram.com/vertexlink_" target="_blank">@vertexlink_</a></li></ul></div>
+    </div>
+    <div class="footer__bottom"><p class="footer__copy">© 2025 Vertex Link — Tous droits réservés</p><div class="footer__social"><a href="mailto:vertexlink33@gmail.com">Email</a><a href="https://instagram.com/vertexlink_" target="_blank">Instagram</a></div></div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/33781971786" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.67 4.61 1.832 6.5L4 29l7.723-1.813A12.94 12.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3z" fill="#fff" fill-opacity=".25"/><path d="M21.5 18.5c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.47 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg>
+</a>
+
+<script>
+(function(){
+const cur=document.getElementById('vl-cursor'),ring=document.getElementById('vl-ring'),prog=document.getElementById('vl-prog');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('h');ring.classList.add('h');});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');ring.classList.remove('h');});});
+window.addEventListener('scroll',()=>{const p=window.scrollY/(document.body.scrollHeight-innerHeight)*100;prog.style.width=p+'%';},{passive:true});
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>{navEl.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+const burger=document.getElementById('burger'),mNav=document.getElementById('mobileNav');
+if(burger)burger.addEventListener('click',()=>{mNav.classList.toggle('open');burger.classList.toggle('open');});
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.eyebrow,.h2,.value-item,.stack-item,.tl-item,.manifesto,.cta-band,.page-hero__num,.page-hero__p,[data-r]').forEach(el=>io.observe(el));
+document.querySelectorAll('.stack-item').forEach((el,i)=>el.style.transitionDelay=(i*.05)+'s');
+document.querySelectorAll('.value-item').forEach((el,i)=>el.style.transitionDelay=(i*.1)+'s');
+setTimeout(()=>document.querySelectorAll('.split-line').forEach(el=>el.classList.add('on')),100);
+})();
+</script>
+</body>
+</html>

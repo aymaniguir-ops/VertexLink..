@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Vertex Link — Architecture de performance. Système de déploiement éclair en 7 jours.">
+<title>Vertex Link — Agence Web</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.69/build/spline-viewer.js"></script>
+<style>
+/* ── HERO ONLY ── */
+.hero{min-height:100svh;display:flex;align-items:stretch;background:#050505;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,95,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,95,0,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 65% 50%,black,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 70% at 65% 50%,black,transparent 75%);}
+.hero-glow{position:absolute;top:0;right:0;width:55vw;height:100%;background:radial-gradient(ellipse at 60% 40%,rgba(255,95,0,.08) 0%,transparent 65%);pointer-events:none;z-index:0;}
+
+.hero__content{position:relative;z-index:2;width:50%;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 5rem) 3rem 5rem var(--pad);}
+
+.hero__spline{position:sticky;top:0;width:50%;height:100svh;flex-shrink:0;align-self:flex-start;z-index:1;pointer-events:none;overflow:hidden;}
+.hero__spline spline-viewer{width:100%;height:100%;display:block;will-change:transform;transform-origin:center center;background:transparent!important;}
+.hero__spline::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,#050505 0%,transparent 28%),linear-gradient(to bottom,#050505 0%,transparent 10%,transparent 90%,#050505 100%);}
+
+.hero__badge{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--f-m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);border:1px solid rgba(255,95,0,.2);padding:.35rem 1rem;border-radius:100px;margin-bottom:2.5rem;width:fit-content;opacity:0;animation:vlu .5s var(--ease) .1s forwards;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#FF5F00;box-shadow:0 0 8px rgba(255,95,0,.9);animation:blink 2.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes vlu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ln-up{to{transform:translateY(0)}}
+@keyframes hi-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes hi-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+.hero__h1{font-family:var(--f-d);font-weight:800;font-size:clamp(3rem,5.8vw,6rem);letter-spacing:-.05em;line-height:.9;color:#fff;margin-bottom:2rem;}
+.hero__h1 em{color:#FF5F00;font-style:italic;font-weight:400;}
+.hero__h1 .ln{display:block;overflow:hidden;}
+.hero__h1 .li{display:block;transform:translateY(110%);animation:ln-up 1s cubic-bezier(.16,1,.3,1) forwards;}
+.hero__h1 .ln:nth-child(1) .li{animation-delay:.18s;}
+.hero__h1 .ln:nth-child(2) .li{animation-delay:.3s;}
+.hero__h1 .ln:nth-child(3) .li{animation-delay:.42s;}
+
+.hero__manifesto{font-family:var(--f-m);font-size:.84rem;line-height:1.95;color:rgba(255,255,255,.38);max-width:44ch;margin-bottom:2.5rem;}
+.hero__manifesto strong{color:#fff;font-weight:600;}
+
+.hero__ctas{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem;}
+
+.hero-icons{display:flex;flex-direction:column;gap:1rem;margin-bottom:3rem;}
+.hi-card{display:flex;align-items:center;gap:.9rem;}
+.hi-icon-wrap{position:relative;flex-shrink:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,95,0,.08);border-radius:50%;}
+.hi-svg{width:20px;height:20px;fill:#FF5F00;animation:hi-float 3s ease-in-out infinite;}
+.hi-card:nth-child(2) .hi-svg{animation-delay:.4s;}
+.hi-card:nth-child(3) .hi-svg{animation-delay:.8s;}
+.hi-ring{position:absolute;inset:0;border-radius:50%;}
+.hi-ring::after{content:'';position:absolute;inset:-1.5px;border-radius:50%;border:1.5px solid transparent;border-top-color:#FF5F00;border-right-color:rgba(255,95,0,.3);animation:hi-spin 2.5s linear infinite;}
+.hi-card:nth-child(2) .hi-ring::after{animation-delay:.3s;}
+.hi-card:nth-child(3) .hi-ring::after{animation-delay:.6s;}
+.hi-title{font-family:var(--f-d);font-weight:700;font-size:.84rem;color:#fff;display:block;}
+.hi-desc{font-family:var(--f-m);font-size:.68rem;color:rgba(255,255,255,.32);line-height:1.6;display:block;}
+
+.hero__proof{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;opacity:0;animation:vlu .5s var(--ease) .8s forwards;}
+.proof-item{display:flex;flex-direction:column;gap:.2rem;}
+.proof-val{font-family:var(--f-d);font-weight:800;font-size:1rem;letter-spacing:-.03em;color:#fff;}
+.proof-lbl{font-family:var(--f-m);font-size:.56rem;color:rgba(255,255,255,.28);letter-spacing:.06em;text-transform:uppercase;}
+.proof-sep{width:1px;height:28px;background:rgba(255,95,0,.18);}
+.hero__corner{position:absolute;z-index:3;font-family:var(--f-m);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.14);opacity:0;animation:vlu .4s ease .95s forwards;}
+.hc-bl{bottom:2rem;left:var(--pad);}
+.hc-br{bottom:2rem;right:var(--pad);}
+
+
+/* ── DASHBOARD ULTRA ── */
+.dash{
+  position:relative;
+  background:#080808;
+  border:1px solid rgba(255,95,0,.15);
+  border-radius:20px;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .7s var(--ease) .2s,transform .7s var(--ease) .2s;
+}
+.dash.on{opacity:1;transform:none;}
+
+/* Canvas particules */
+.dash__canvas{position:absolute;inset:0;pointer-events:none;z-index:0;}
+
+/* Glow orange top-right */
+.dash::before{
+  content:'';
+  position:absolute;
+  top:-60px;right:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(255,95,0,.18) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+/* Grain texture */
+.dash::after{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+.dash__header{
+  position:relative;z-index:1;
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(10px);
+  padding:.85rem 1.25rem;
+  display:flex;align-items:center;gap:.75rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.dash__dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#FF5F00;
+  box-shadow:0 0 12px rgba(255,95,0,1),0 0 24px rgba(255,95,0,.5);
+  animation:dashPulse 2s ease-in-out infinite;
+}
+@keyframes dashPulse{0%,100%{box-shadow:0 0 8px rgba(255,95,0,.9),0 0 20px rgba(255,95,0,.4)}50%{box-shadow:0 0 14px rgba(255,95,0,1),0 0 32px rgba(255,95,0,.6)}}
+.dash__title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);flex:1;}
+.dash__live{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:#FF5F00;display:flex;align-items:center;gap:.4rem;}
+.dash__live::before{content:'';width:5px;height:5px;border-radius:50%;background:#FF5F00;box-shadow:0 0 6px rgba(255,95,0,.9);animation:dashPulse 1.5s ease-in-out infinite;}
+
+.dash__body{position:relative;z-index:1;padding:1.5rem;display:flex;flex-direction:column;gap:1.4rem;}
+
+/* Score Ring Hero */
+.dash__hero{display:flex;align-items:center;gap:1.5rem;}
+.dash__ring-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
+.dash__ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.dash__ring-bg{fill:none;stroke:rgba(255,255,255,.05);stroke-width:8;}
+.dash__ring-glow{fill:none;stroke:url(#orangeGrad);stroke-width:8;stroke-linecap:round;stroke-dasharray:298;stroke-dashoffset:298;transition:stroke-dashoffset 2s cubic-bezier(.16,1,.3,1) .3s;filter:drop-shadow(0 0 6px rgba(255,95,0,.8));}
+.dash__ring-val{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.dash__ring-num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-.05em;color:#fff;line-height:1;}
+.dash__ring-sup{font-family:'DM Mono',monospace;font-size:.55rem;color:#FF5F00;letter-spacing:.08em;}
+.dash__ring-sub{font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.25);letter-spacing:.08em;text-transform:uppercase;margin-top:.1rem;}
+.dash__hero-info{flex:1;}
+.dash__hero-label{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-.03em;color:#fff;margin-bottom:.35rem;}
+.dash__hero-sub{font-family:'DM Mono',monospace;font-size:.62rem;color:rgba(255,255,255,.3);letter-spacing:.06em;line-height:1.6;}
+
+/* Flip number metrics */
+.dash__metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);border-radius:10px;overflow:hidden;}
+.dash__metric{
+  background:#0a0a0a;
+  padding:1rem .75rem;
+  display:flex;flex-direction:column;align-items:center;gap:.2rem;
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.dash__metric:hover{background:#111;}
+.dash__metric::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,95,0,.4),transparent);
+  transform:scaleX(0);transition:transform .4s var(--ease);
+}
+.dash__metric:hover::before{transform:scaleX(1);}
+.dash__metric-num{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1.6rem;letter-spacing:-.05em;
+  color:#fff;line-height:1;
+}
+.dash__metric-num span{display:inline-block;transition:transform .3s,opacity .3s;}
+.dash__metric-unit{font-family:'DM Mono',monospace;font-size:.58rem;color:#FF5F00;letter-spacing:.08em;}
+.dash__metric-lbl{font-family:'DM Mono',monospace;font-size:.54rem;color:rgba(255,255,255,.25);letter-spacing:.07em;text-transform:uppercase;text-align:center;}
+
+/* Bars glassmorphism */
+.dash__bars{display:flex;flex-direction:column;gap:.6rem;}
+.dash__bar-row{display:flex;align-items:center;gap:.6rem;}
+.dash__bar-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.32);width:72px;flex-shrink:0;letter-spacing:.04em;}
+.dash__bar-track{
+  flex:1;height:5px;
+  background:rgba(255,255,255,.06);
+  border-radius:3px;overflow:hidden;
+  position:relative;
+}
+.dash__bar-fill{
+  height:100%;width:0;border-radius:3px;
+  background:linear-gradient(to right,#FF5F00,#ffaa60);
+  position:relative;
+  transition:width 1.6s cubic-bezier(.16,1,.3,1);
+}
+.dash__bar-fill::after{
+  content:'';
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px rgba(255,95,0,.9);
+  opacity:0;transition:opacity .3s .8s;
+}
+.dash__bar-fill.lit::after{opacity:1;}
+.dash__bar-val{font-family:'DM Mono',monospace;font-size:.6rem;color:#FF5F00;min-width:1.8rem;text-align:right;letter-spacing:.04em;}
+
+/* Bottom status row */
+.dash__footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.25rem;
+  background:rgba(255,255,255,.02);
+  border-top:1px solid rgba(255,255,255,.05);
+  position:relative;z-index:1;
+}
+.dash__footer-stat{display:flex;flex-direction:column;align-items:center;gap:.15rem;}
+.dash__footer-val{font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:-.03em;color:#fff;}
+.dash__footer-lbl{font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.25);letter-spacing:.07em;text-transform:uppercase;}
+.dash__footer-sep{width:1px;height:24px;background:rgba(255,255,255,.06);}
+
+
+/* ── CTA FINAL (home only) ── */
+.cta-final{background:#FF5F00;border-radius:16px;padding:clamp(3rem,6vw,5rem);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.cta-final.on{opacity:1;transform:none;}
+.ctaf-avail{display:flex;align-items:center;gap:.6rem;font-family:var(--f-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:1.5rem;}
+.ctaf-dot{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.6);animation:blink 2s ease-in-out infinite;}
+.ctaf-h{font-family:var(--f-d);font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.05em;line-height:.92;color:#fff;margin-bottom:1.5rem;}
+.ctaf-h em{font-style:italic;font-weight:400;opacity:.85;}
+.ctaf-ln{display:block;overflow:hidden;}
+.ctaf-li{display:block;transform:translateY(110%);transition:transform 1s var(--ease);}
+.cta-final.on .ctaf-li{transform:none;}
+.cta-final.on .ctaf-ln:nth-child(2) .ctaf-li{transition-delay:.1s;}
+.cta-final.on .ctaf-ln:nth-child(3) .ctaf-li{transition-delay:.2s;}
+.ctaf-p{font-family:var(--f-m);font-size:.72rem;color:rgba(255,255,255,.75);margin-bottom:2rem;}
+.ctaf-btns{display:flex;gap:.75rem;flex-wrap:wrap;}
+.cta-final .btn--dark{background:#050505;color:#fff;border-color:#050505;}
+.cta-final .btn--dark:hover{background:#111;}
+.cta-final .btn--ghost{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.35);}
+.ctaf-note{font-family:var(--f-m);font-size:.62rem;color:rgba(255,255,255,.55);margin-top:1.2rem;}
+.ctaf-right{display:flex;flex-direction:column;gap:1rem;}
+.ctaf-card{background:rgba(0,0,0,.2);border-radius:10px;padding:1.5rem;}
+.cc-lbl{font-family:var(--f-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);display:block;margin-bottom:.5rem;}
+.cc-big{font-family:var(--f-d);font-weight:800;font-size:2.2rem;letter-spacing:-.05em;color:#fff;display:block;}
+.cc-sub{font-family:var(--f-m);font-size:.62rem;color:rgba(255,255,255,.55);}
+.cc-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:.75rem;overflow:hidden;}
+.cc-fill{height:100%;width:0;background:#fff;transition:width 1.9s var(--ease) .5s;}
+.cta-final.on .cc-fill{width:97%;}
+.cc-live{display:flex;align-items:center;gap:.75rem;}
+.cc-dot{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.7);animation:blink 2s ease-in-out infinite;}
+.cc-live-txt{font-family:var(--f-m);font-size:.68rem;color:rgba(255,255,255,.8);letter-spacing:.06em;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{flex-direction:column;position:relative;}
+  .hero__content{width:100%;padding:calc(var(--nav-h) + 3rem) var(--pad) 3rem;min-height:auto;position:relative;z-index:2;}
+  .hero__spline{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.15;pointer-events:none;z-index:0;}
+  .hero__spline::before{background:linear-gradient(to bottom,#050505 0%,transparent 15%,transparent 85%,#050505 100%);}
+  .process-wrap{grid-template-columns:1fr;gap:2.5rem;}
+  .cta-final{grid-template-columns:1fr;gap:2rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="vl-cursor"></div>
+<div id="vl-ring"></div>
+<div id="vl-prog"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="home.html" class="nav__logo">
+      <img src="logo.png" alt="VL">
+      <span class="nav__logo-txt">Vertex Link</span>
+    </a>
+    <nav class="nav__links">
+      <a href="services.html" class="nav__link">Services</a>
+      <a href="portfolio.html" class="nav__link">Projets</a>
+      <a href="a-propos.html" class="nav__link">À propos</a>
+      <a href="contact.html" class="nav__link">Contact</a>
+    </nav>
+    <a href="contact.html" class="nav__cta">Démarrer un projet</a>
+    <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="services.html">Services</a>
+  <a href="portfolio.html">Projets</a>
+  <a href="a-propos.html">À propos</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="m-cta">Démarrer un projet →</a>
+</nav>
+
+<main>
+
+<section class="hero">
+  <span class="hero__corner hc-bl">FR — Remote</span>
+  <span class="hero__corner hc-br">© 2025</span>
+  <div class="hero-glow"></div>
+
+  <div class="hero__content">
+    <div class="hero__badge"><span class="badge-dot"></span>Architecture de Performance · 2 mandats disponibles</div>
+    <h1 class="hero__h1">
+      <span class="ln"><span class="li">Votre présence</span></span>
+      <span class="ln"><span class="li">digitale,</span></span>
+      <span class="ln"><span class="li"><em>réarchitecturée.</em></span></span>
+    </h1>
+    <p class="hero__manifesto">
+      Nous ne construisons pas des interfaces.<br>
+      Nous déployons des <strong>architectures de performance</strong> —<br>
+      garanties sous <strong>7 jours</strong>, sans compromis.
+    </p>
+    <div class="hero__ctas">
+      <a href="contact.html" class="btn btn--fire">Activer mon système <span class="arr">→</span></a>
+      <a href="services.html" class="btn btn--ghost">Voir les architectures</a>
+    </div>
+    <div class="hero-icons">
+      <div class="hi-card">
+        <div class="hi-icon-wrap">
+          <svg class="hi-svg" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="hi-ring"></div>
+        </div>
+        <div class="hi-text">
+          <span class="hi-title">Déploiement Éclair</span>
+          <span class="hi-desc">Système actif en 7 jours. Pas une heure de plus.</span>
+        </div>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon-wrap">
+          <svg class="hi-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <div class="hi-ring"></div>
+        </div>
+        <div class="hi-text">
+          <span class="hi-title">Architecture Unique</span>
+          <span class="hi-desc">Chaque pixel pensé pour votre image. 100% exclusif.</span>
+        </div>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon-wrap">
+          <svg class="hi-svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1" fill="#050505"/></svg>
+          <div class="hi-ring"></div>
+        </div>
+        <div class="hi-text">
+          <span class="hi-title">100% Responsive</span>
+          <span class="hi-desc">Parfait sur mobile, tablette, desktop. Partout.</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero__proof">
+      <div class="proof-item"><span class="proof-val">97+</span><span class="proof-lbl">Lighthouse</span></div>
+      <span class="proof-sep"></span>
+      <div class="proof-item"><span class="proof-val">7j</span><span class="proof-lbl">Déploiement garanti</span></div>
+      <span class="proof-sep"></span>
+      <div class="proof-item"><span class="proof-val">100%</span><span class="proof-lbl">Sur mesure</span></div>
+      <span class="proof-sep"></span>
+      <div class="proof-item"><span class="proof-val">★★★★★</span><span class="proof-lbl">Clients satisfaits</span></div>
+    </div>
+  </div>
+
+  <div class="hero__spline">
+    <spline-viewer id="splineEl" url="https://prod.spline.design/6ApLotimKNIGPuaN/scene.splinecode" style="width:100%;height:100%;background:transparent!important;"></spline-viewer>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Architecture de Performance<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Figma<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Design sur mesure<span class="marquee-dot"></span></span>
+    <span class="marquee-item">SEO Technique<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Core Web Vitals<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mobile First<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Lighthouse 97+<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Hébergement inclus<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Architecture de Performance<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Figma<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Design sur mesure<span class="marquee-dot"></span></span>
+    <span class="marquee-item">SEO Technique<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Core Web Vitals<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mobile First<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Lighthouse 97+<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Hébergement inclus<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section__inner">
+    <p class="eyebrow">Ce qu'on déploie</p>
+    <h2 class="h2">Une architecture qui<br><em>performe.</em></h2>
+    <div class="feats">
+      <div class="feat">
+        <div class="feat-n">01</div>
+        <div class="feat-title js-sc">Performance absolue</div>
+        <p class="feat-desc">Chaque interface construite à la main. Pas de builder, pas de surcharge — architecture propre, chargement éclair.</p>
+        <div class="feat-tags"><span class="feat-tag">Lighthouse 97+</span><span class="feat-tag">Core Web Vitals</span><span class="feat-tag">Zéro template</span></div>
+      </div>
+      <div class="feat">
+        <div class="feat-n">02</div>
+        <div class="feat-title js-sc">Design qui convertit</div>
+        <p class="feat-desc">On part de votre activité, vos clients, votre ton. L'interface découle de ça — pas d'un catalogue générique.</p>
+        <div class="feat-tags"><span class="feat-tag">100% exclusif</span><span class="feat-tag">Mobile-first</span><span class="feat-tag">Identité cohérente</span></div>
+      </div>
+      <div class="feat">
+        <div class="feat-n">03</div>
+        <div class="feat-title js-sc">Visible sur Google</div>
+        <p class="feat-desc">Structure, balises, vitesse — tout ce que Google regarde est intégré dès le départ, pas ajouté en option payante.</p>
+        <div class="feat-tags"><span class="feat-tag">SEO on-page</span><span class="feat-tag">Schema.org</span><span class="feat-tag">Analytics inclus</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="section__inner">
+    <p class="eyebrow">En chiffres</p>
+    <h2 class="h2">Ce qu'on <em>garantit.</em></h2>
+    <div class="stats-row js-stats">
+      <div class="stat js-stat" data-to="97"><div class="stat-num"><span class="js-count">97</span><sup>+</sup></div><div class="stat-lbl">Score Lighthouse moyen</div></div>
+      <div class="stat js-stat" data-to="7"><div class="stat-num"><span class="js-count">7</span><sup>j</sup></div><div class="stat-lbl">Déploiement garanti</div></div>
+      <div class="stat"><div class="stat-num">2<sup>×</sup></div><div class="stat-lbl">Paiement sans frais</div></div>
+      <div class="stat"><div class="stat-num">0<sup>€</sup></div><div class="stat-lbl">Frais cachés</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+    <p class="eyebrow">Comment ça fonctionne</p>
+    <h2 class="h2">4 étapes.<br><em>Zéro surprise.</em></h2>
+    <div class="process-wrap">
+      <div id="steps">
+        <div class="step-item on" data-i="0"><span class="step-n">01</span><div><div class="step-t">On clarifie le projet</div><p class="step-d">Objectifs, cible, délais. Tout est défini avant de démarrer — aucune zone floue.</p></div></div>
+        <div class="step-item" data-i="1"><span class="step-n">02</span><div><div class="step-t">On pose les bases</div><p class="step-d">Maquette Figma validée par vous avant qu'une seule ligne d'architecture soit posée.</p></div></div>
+        <div class="step-item" data-i="2"><span class="step-n">03</span><div><div class="step-t">On déploie l'architecture</div><p class="step-d">Système construit à la main. Propre, rapide, responsive. Zéro compromis.</p></div></div>
+        <div class="step-item" data-i="3"><span class="step-n">04</span><div><div class="step-t">On livre et on reste là</div><p class="step-d">Mise en ligne, DNS, hébergement inclus. Support post-livraison garanti.</p></div></div>
+      </div>
+<div class="dash js-dash">
+        <canvas class="dash__canvas" id="dashCanvas"></canvas>
+
+        <div class="dash__header">
+          <span class="dash__dot"></span>
+          <span class="dash__title">Performance Report — Vertex Link</span>
+          <span class="dash__live">Live</span>
+        </div>
+
+        <div class="dash__body">
+
+          <div class="dash__hero">
+            <div class="dash__ring-wrap">
+              <svg viewBox="0 0 100 100" overflow="visible">
+                <defs>
+                  <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FF5F00"/>
+                    <stop offset="100%" stop-color="#ffaa60"/>
+                  </linearGradient>
+                </defs>
+                <circle class="dash__ring-bg" cx="50" cy="50" r="42"/>
+                <circle class="dash__ring-glow" id="dashArc" cx="50" cy="50" r="42"/>
+              </svg>
+              <div class="dash__ring-val">
+                <span class="dash__ring-num" id="dashScore">0</span>
+                <span class="dash__ring-sup">/ 100</span>
+                <span class="dash__ring-sub">score</span>
+              </div>
+            </div>
+            <div class="dash__hero-info">
+              <div class="dash__hero-label">Lighthouse 97+</div>
+              <div class="dash__hero-sub">Performance · SEO · A11y<br>Best Practices · Vitals</div>
+            </div>
+          </div>
+
+          <div class="dash__bars">
+            <div class="dash__bar-row">
+              <span class="dash__bar-lbl">Performance</span>
+              <div class="dash__bar-track"><div class="dash__bar-fill" data-w="97"></div></div>
+              <span class="dash__bar-val">97</span>
+            </div>
+            <div class="dash__bar-row">
+              <span class="dash__bar-lbl">SEO</span>
+              <div class="dash__bar-track"><div class="dash__bar-fill" data-w="100"></div></div>
+              <span class="dash__bar-val">100</span>
+            </div>
+            <div class="dash__bar-row">
+              <span class="dash__bar-lbl">Accessibilité</span>
+              <div class="dash__bar-track"><div class="dash__bar-fill" data-w="95"></div></div>
+              <span class="dash__bar-val">95</span>
+            </div>
+            <div class="dash__bar-row">
+              <span class="dash__bar-lbl">Best Practices</span>
+              <div class="dash__bar-track"><div class="dash__bar-fill" data-w="100"></div></div>
+              <span class="dash__bar-val">100</span>
+            </div>
+          </div>
+
+          <div class="dash__metrics">
+            <div class="dash__metric">
+              <div class="dash__metric-num"><span id="mVal0">0</span></div>
+              <div class="dash__metric-unit">jours</div>
+              <div class="dash__metric-lbl">Livraison</div>
+            </div>
+            <div class="dash__metric">
+              <div class="dash__metric-num"><span id="mVal1">0</span></div>
+              <div class="dash__metric-unit">%</div>
+              <div class="dash__metric-lbl">Sur mesure</div>
+            </div>
+            <div class="dash__metric">
+              <div class="dash__metric-num"><span id="mVal2">0</span></div>
+              <div class="dash__metric-unit">€</div>
+              <div class="dash__metric-lbl">Frais cachés</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dash__footer">
+          <div class="dash__footer-stat">
+            <span class="dash__footer-val">LCP 0.8s</span>
+            <span class="dash__footer-lbl">Largest Paint</span>
+          </div>
+          <div class="dash__footer-sep"></div>
+          <div class="dash__footer-stat">
+            <span class="dash__footer-val">FID 0ms</span>
+            <span class="dash__footer-lbl">First Input</span>
+          </div>
+          <div class="dash__footer-sep"></div>
+          <div class="dash__footer-stat">
+            <span class="dash__footer-val">CLS 0.00</span>
+            <span class="dash__footer-lbl">Layout Shift</span>
+          </div>
+          <div class="dash__footer-sep"></div>
+          <div class="dash__footer-stat">
+            <span class="dash__footer-val">★★★★★</span>
+            <span class="dash__footer-lbl">Clients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+    <div class="cta-final js-ctaf">
+      <div class="ctaf-left">
+        <div class="ctaf-avail"><span class="ctaf-dot"></span>Disponible maintenant</div>
+        <h2 class="ctaf-h">
+          <span class="ctaf-ln"><span class="ctaf-li">Votre système,</span></span>
+          <span class="ctaf-ln"><span class="ctaf-li">déployé en</span></span>
+          <span class="ctaf-ln"><span class="ctaf-li"><em>7 jours.</em></span></span>
+        </h2>
+        <p class="ctaf-p">Devis gratuit · Réponse sous 24h · Sans engagement</p>
+        <div class="ctaf-btns">
+          <a href="contact.html" class="btn btn--dark">Activer mon architecture <span class="arr">→</span></a>
+          <a href="services.html" class="btn btn--ghost">Voir les offres</a>
+        </div>
+        <p class="ctaf-note">Paiement en 2× · Hébergement inclus · Support inclus</p>
+      </div>
+      <div class="ctaf-right">
+        <div class="ctaf-card cc-score">
+          <span class="cc-lbl">Lighthouse</span>
+          <span class="cc-big">97</span>
+          <div class="cc-bar"><div class="cc-fill"></div></div>
+        </div>
+        <div class="ctaf-card cc-time">
+          <span class="cc-lbl">Déploiement garanti</span>
+          <span class="cc-big">7j</span>
+          <span class="cc-sub">garanti contractuellement</span>
+        </div>
+        <div class="ctaf-card cc-live">
+          <span class="cc-dot"></span>
+          <span class="cc-live-txt">Système en ligne</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo"><img src="logo.png" alt="VL">Vertex Link</div>
+        <p class="footer__desc">Architecture de performance — systèmes de déploiement éclair sur mesure.</p>
+      </div>
+      <div class="footer__col"><h3 class="footer__col-title">Navigation</h3><ul><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Projets</a></li><li><a href="a-propos.html">À propos</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Offres</h3><ul><li><a href="services.html">Genèse — 750€</a></li><li><a href="services.html">Ascension — 950€</a></li><li><a href="services.html">Renaissance — 600€</a></li></ul></div>
+      <div class="footer__col"><h3 class="footer__col-title">Contact</h3><ul><li><a href="mailto:vertexlink33@gmail.com">vertexlink33@gmail.com</a></li><li><a href="https://instagram.com/vertexlink_" target="_blank">@vertexlink_</a></li></ul><div style="margin-top:1.5rem"><a href="contact.html" class="btn btn--fire" style="font-size:.72rem;padding:.45rem 1rem;">Réserver →</a></div></div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2025 Vertex Link — Tous droits réservés</p>
+      <div class="footer__social"><a href="mailto:vertexlink33@gmail.com">Email</a><a href="https://instagram.com/vertexlink_" target="_blank">Instagram</a></div>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/33781971786" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.67 4.61 1.832 6.5L4 29l7.723-1.813A12.94 12.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3z" fill="#fff" fill-opacity=".25"/><path d="M21.5 18.5c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.47 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z" fill="#fff"/></svg>
+</a>
+
+<script src="shared.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // Scroll reveal — uniquement les éléments spécifiques à home
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.eyebrow,.h2,.feat,.js-cw,.stat').forEach(function(el){ io.observe(el); });
+
+  // Stats counter
+  function countUp(el, to){
+    var start = performance.now(), dur = 1400;
+    function ease(p){ return 1 - Math.pow(1-p, 3); }
+    function tick(now){
+      var p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round(ease(p) * to);
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var statsEl = document.querySelector('.js-stats');
+  if(statsEl){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.querySelectorAll('.js-stat').forEach(function(s, i){
+          setTimeout(function(){
+            var c = s.querySelector('.js-count'), to = parseInt(s.dataset.to);
+            if(c && to) countUp(c, to);
+          }, i * 150);
+        });
+      });
+    },{threshold:.3}).observe(statsEl);
+  }
+
+
+  // ── DASHBOARD ULTRA ANIMÉ ──
+  var dashEl = document.querySelector('.dash');
+  if(dashEl){
+    // Canvas particules
+    var canvas = document.getElementById('dashCanvas');
+    if(canvas){
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      function resizeCanvas(){
+        canvas.width = dashEl.offsetWidth;
+        canvas.height = dashEl.offsetHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      for(var p=0; p<35; p++){
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.3,
+          vx: (Math.random()-0.5) * 0.3,
+          vy: (Math.random()-0.5) * 0.3,
+          a: Math.random() * 0.4 + 0.05
+        });
+      }
+      function drawParticles(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(function(p){
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(255,95,0,'+p.a+')';
+          ctx.fill();
+          p.x+=p.vx; p.y+=p.vy;
+          if(p.x<0||p.x>canvas.width) p.vx*=-1;
+          if(p.y<0||p.y>canvas.height) p.vy*=-1;
+        });
+        requestAnimationFrame(drawParticles);
+      }
+      drawParticles();
+    }
+
+    // Reveal au scroll
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.classList.add('on');
+
+        // Ring Lighthouse
+        setTimeout(function(){
+          var arc = document.getElementById('dashArc');
+          var scoreEl = document.getElementById('dashScore');
+          if(arc){
+            var circumference = 2 * Math.PI * 42;
+            arc.style.strokeDashoffset = circumference - (circumference * 0.97);
+          }
+          if(scoreEl){
+            var s = performance.now();
+            (function tick(now){
+              var p = Math.min((now-s)/1800,1);
+              var ease = 1-Math.pow(1-p,3);
+              scoreEl.textContent = Math.round(ease*97);
+              if(p<1) requestAnimationFrame(tick);
+            })(performance.now());
+          }
+        }, 300);
+
+        // Barres + glow tip
+        e.target.querySelectorAll('.dash__bar-fill').forEach(function(bar,i){
+          setTimeout(function(){
+            bar.style.width = bar.dataset.w + '%';
+            bar.classList.add('lit');
+          }, 400 + i*120);
+        });
+
+        // Métriques flip
+        var targets = [7, 100, 0];
+        targets.forEach(function(to, i){
+          var el = document.getElementById('mVal'+i);
+          if(!el) return;
+          if(to === 0){ el.textContent='0'; return; }
+          setTimeout(function(){
+            var s=performance.now(), dur=1000;
+            (function tick(now){
+              var p=Math.min((now-s)/dur,1);
+              var ease=1-Math.pow(1-p,3);
+              el.textContent=Math.round(ease*to);
+              if(p<1) requestAnimationFrame(tick);
+            })(performance.now());
+          }, 500 + i*180);
+        });
+
+      });
+    },{threshold:.25}).observe(dashEl);
+  }
+
+
+    // Spline — fix background transparent + scroll rotation
+  var sv = document.getElementById('splineEl');
+  if(sv){
+    function fixBg(){
+      try {
+        var root = sv.shadowRoot;
+        if(!root) return;
+        var fix = root.getElementById('vl-fix');
+        if(!fix){
+          fix = document.createElement('style');
+          fix.id = 'vl-fix';
+          fix.textContent = ':host{background:transparent!important}canvas{background:transparent!important;background-color:transparent!important}';
+          root.prepend(fix);
+        }
+      } catch(e){}
+    }
+    sv.addEventListener('load', fixBg);
+    [300, 800, 1500, 3000].forEach(function(t){ setTimeout(fixBg, t); });
+
+    // Scroll rotation lerp
+    var raf = null, cur = 0, tgt = 0;
+    window.addEventListener('scroll', function(){
+      tgt = window.scrollY * 0.025;
+      if(!raf) raf = requestAnimationFrame(rotate);
+    }, {passive: true});
+    function rotate(){
+      cur += (tgt - cur) * 0.06;
+      sv.style.transform = 'rotate(' + cur.toFixed(2) + 'deg)';
+      if(Math.abs(tgt - cur) > 0.01) raf = requestAnimationFrame(rotate);
+      else raf = null;
+    }
+  }
+
+})();
+</script>
+</body>
+</html>
